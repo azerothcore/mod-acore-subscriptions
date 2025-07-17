@@ -5,9 +5,7 @@
 #include "ScriptMgr.h"
 #include "Player.h"
 #include "Config.h"
-#include "Chat.h"
 #include "Subscriptions.h"
-
 
 enum Settings
 {
