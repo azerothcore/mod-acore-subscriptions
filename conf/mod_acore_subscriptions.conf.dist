@@ -8,10 +8,10 @@
 # ModSubscriptions configuration
 ########################################
 #
-#    ModSubscriptions.Enable
+#    ModAcoreSubscriptions.Enable
 #        Description: Enable my module
 #        Default:     0 - Disabled
 #                     1 - Enabled
 #
 
-ModSubscriptions.Enable = 1
+ModAcoreSubscriptions.Enable = 1
