@@ -9,7 +9,7 @@
 
 enum Settings
 {
-    SETTING_MEMBERSHIP_LEVEL = 0
+    SETTING_ACORE_MEMBERSHIP_LEVEL = 0
 };
 
 enum MembershipLevels
@@ -55,7 +55,7 @@ public:
             }
         }
 
-        player->UpdatePlayerSetting(ModName, SETTING_MEMBERSHIP_LEVEL, membershipLevel);
+        player->UpdatePlayerSetting(ModName, SETTING_ACORE_MEMBERSHIP_LEVEL, membershipLevel);
     }
 };
 
