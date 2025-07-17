@@ -67,7 +67,7 @@ public:
         }) {
     }
 
-    void OnAfterConfigLoad(bool reload) override
+    void OnAfterConfigLoad(bool /*reload*/) override
     {
         sSubscriptions->SetEnabled(sConfigMgr->GetOption<bool>("ModAcoreSubscriptions.Enable", false));
     }
