@@ -3,22 +3,19 @@
 
 #include "Player.h"
 #include "Config.h"
-#include "InstanceScript.h"
 #include "ScriptMgr.h"
 
-enum HoarderStorages
+enum Settings
 {
-    STORAGE_ONE,
-    STORAGE_TWO,
-    STORAGE_THREE,
-    MAX_HOARDER_STORAGES,
-
-    STORAGE_SEARCH // temporary
+    SETTING_ACORE_MEMBERSHIP_LEVEL = 0
 };
 
-enum HoarderSettings
+enum MembershipLevels
 {
-    SETTING_MEMBERSHIP_LEVEL = 0 // Acore CMS Subscriptions
+    MEMBERSHIP_LEVEL_NONE    = 0,
+    MEMBERSHIP_LEVEL_ADMIRER = 2, // Level 1: Admirer of Chromie
+    MEMBERSHIP_LEVEL_WATCHER = 6, // Level 2: Watcher
+    MEMBERSHIP_LEVEL_KEEPER  = 7  // Level 3: Time Keeper
 };
 
 std::string const ModName = "acore_cms_subscriptions";
@@ -33,6 +30,10 @@ public:
 
     [[nodiscard]] bool IsEnabled() const { return Enabled; }
     void SetEnabled(bool enabled) { Enabled = enabled; }
+
+    [[nodiscard]] std::string GetSubscriptionInfo(uint32 membershipLevel) const;
+    [[nodiscard]] uint32 GetMembershipLevel(Player* player) const { return player->GetPlayerSetting(ModName, SETTING_ACORE_MEMBERSHIP_LEVEL).value; };
+    [[nodiscard]] uint32 GetConvertedMembershipLevel(uint32 level) const;
 };
 
 #define sSubscriptions AcoreSubscriptions::instance()

@@ -3,9 +3,11 @@
  */
 
 void AddModAcoreSubscriptionsScripts();
+void AddSC_acore_subscriptions_commandscript();
 
 void Addmod_acore_subscriptionsScripts()
 {
     AddModAcoreSubscriptionsScripts();
+    AddSC_acore_subscriptions_commandscript();
 }
 

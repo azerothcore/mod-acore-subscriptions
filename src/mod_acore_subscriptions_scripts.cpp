@@ -7,19 +7,6 @@
 #include "Config.h"
 #include "Subscriptions.h"
 
-enum Settings
-{
-    SETTING_ACORE_MEMBERSHIP_LEVEL = 0
-};
-
-enum MembershipLevels
-{
-    MEMBERSHIP_LEVEL_NONE    = 0,
-    MEMBERSHIP_LEVEL_ADMIRER = 2, // Level 1: Admirer of Chromie
-    MEMBERSHIP_LEVEL_WATCHER = 6, // Level 2: Watcher
-    MEMBERSHIP_LEVEL_KEEPER  = 7  // Level 3: Time Keeper
-};
-
 class mod_acore_subscriptions_playerscript : public PlayerScript
 {
 public:
@@ -40,20 +27,7 @@ public:
             accountId = player->GetSession()->GetAccountId();
 
         if (QueryResult resultAcc = LoginDatabase.Query("SELECT `membership_level`  FROM `acore_cms_subscriptions` WHERE `account_name` COLLATE utf8mb4_general_ci = (SELECT `username` FROM `account` WHERE `id` = {})", accountId))
-        {
-            switch ((*resultAcc)[0].Get<uint32>())
-            {
-                case MEMBERSHIP_LEVEL_ADMIRER:
-                    membershipLevel = 1; // Admirer of Chromie
-                    break;
-                case MEMBERSHIP_LEVEL_WATCHER:
-                    membershipLevel = 2; // Watcher
-                    break;
-                case MEMBERSHIP_LEVEL_KEEPER:
-                    membershipLevel = 3; // Time Keeper
-                    break;
-            }
-        }
+            membershipLevel = sSubscriptions->GetConvertedMembershipLevel((*resultAcc)[0].Get<uint32>());
 
         player->UpdatePlayerSetting(ModName, SETTING_ACORE_MEMBERSHIP_LEVEL, membershipLevel);
     }
