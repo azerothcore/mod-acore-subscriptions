@@ -17,7 +17,8 @@ public:
     {
         static ChatCommandTable subscriptionsTable =
         {
-            { "info", HandleSubscriptionInfoCommand, SEC_PLAYER, Console::Yes },
+            { "info",   HandleSubscriptionInfoCommand, SEC_PLAYER, Console::Yes },
+            { "update", HandleSubscriptionUpdateCommand, SEC_MODERATOR, Console::Yes }
         };
 
         static ChatCommandTable commandTable =
@@ -58,6 +59,30 @@ public:
             message = sSubscriptions->GetSubscriptionInfo(sSubscriptions->GetConvertedMembershipLevel((*resultAcc)[0].Get<uint32>()));
 
         handler->SendSysMessage(message);
+        return true;
+    }
+
+    static bool HandleSubscriptionUpdateCommand(ChatHandler* handler, Optional<PlayerIdentifier> player, uint32 membershipLevel)
+    {
+        if (!player)
+            player = PlayerIdentifier::FromTargetOrSelf(handler);
+
+        if (!player)
+        {
+            handler->SendErrorMessage("Player not found!");
+            return false;
+        }
+
+        if (!player->GetConnectedPlayer())
+        {
+            handler->SendErrorMessage("Player is not online!");
+            return false;
+        }
+
+        uint32 oldMembershipLevel = sSubscriptions->GetMembershipLevel(player->GetConnectedPlayer());
+        player->GetConnectedPlayer()->UpdatePlayerSetting(ModName, SETTING_ACORE_MEMBERSHIP_LEVEL, membershipLevel);
+        handler->PSendSysMessage("Updated player {}'s subscription from level {} to {}.", player->GetName(), oldMembershipLevel, membershipLevel);
+        handler->SendSysMessage("This is temporary and will reset at the next relog. To edit it permanently, update the database directly.");
         return true;
     }
 };
