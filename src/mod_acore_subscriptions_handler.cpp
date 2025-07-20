@@ -38,7 +38,7 @@ std::string AcoreSubscriptions::GetSubscriptionInfo(uint32 membershipLevel) cons
         case 3: // MEMBERSHIP_LEVEL_KEEPER
             return "You are a Time Keeper (level 3). Your support is invaluable!";
         default:
-            return "Unknown membership level. Level: " + membershipLevel;
+            return "Unknown membership level. Level: " + std::to_string(membershipLevel);
     }
 
     return "Unknown membership level.";
